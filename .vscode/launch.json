@@ -1,0 +1,20 @@
+{
+    "version": "0.0.1",
+    "configurations": [
+        {
+            "name": "Debug Django Islands",
+            "type": "debugpy",
+            "request": "launch",
+            "args": [
+                "runserver",
+                "--noreload",
+                "--nothreading",
+                "0.0.0.0:27271"
+            ],
+            "django": true,
+            "autoStartBrowser": false,
+            "justMyCode": false,
+            "program": "${workspaceFolder}/manage.py"
+        }
+    ]
+}
