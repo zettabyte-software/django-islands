@@ -65,8 +65,10 @@ def wrap_forward_many_to_many_manager(create_forward_many_to_many_manager_method
 class TenantQuerySet(QuerySet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        kwargs = get_tenant_filters(self.model)
-        self.query.add_q(Q(**kwargs))
+        # Sometimes django creates empty QuerySets wihtout models
+        if self.model:
+            kwargs = get_tenant_filters(self.model)
+            self.query.add_q(Q(**kwargs))
 
 
 class TenantManagerMixin:
