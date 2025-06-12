@@ -19,14 +19,14 @@ def get_model_by_db_table(db_table):
         if model._meta.db_table == db_table:
             return model
 
-    raise ValueError(f"No model found with db_table {db_table}!")
+    raise ValueError(f"No model found with db_table {db_table}")
 
 
 def get_current_tenant():
     return getattr(_context, "tenant", None)
 
 
-def get_tenant_column(model_class_or_instance):
+def get_tenant_column(model_class_or_instance: object):
     if inspect.isclass(model_class_or_instance):
         model_class_or_instance = model_class_or_instance()
 
@@ -38,14 +38,14 @@ def get_tenant_column(model_class_or_instance):
         ) from not_a_tenant_model
 
 
-def get_tenant_field(model_class_or_instance):
+def get_tenant_field(model_class_or_instance: object):
     tenant_column = get_tenant_column(model_class_or_instance)
     all_fields = model_class_or_instance._meta.fields
     try:
         return next(field for field in all_fields if field.column == tenant_column)
     except StopIteration as no_field_found:
         raise ValueError(
-            f'No field found in {type(model_class_or_instance).name} with column name "{tenant_column}"'
+            f'No field found in {model_class_or_instance.__class__.__name__} with column name "{tenant_column}"'
         ) from no_field_found
 
 
