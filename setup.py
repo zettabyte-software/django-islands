@@ -14,7 +14,7 @@ with open(path.join(this_directory, "README.md")) as f:
 
 setup(
     name="django-islands",
-    version="0.0.1",  # Required
+    version="0.0.2",  # Required
     description="Django Library to Implement Multi-Tenant Architecture via tenant_id column in Postgres",
     long_description=long_description,
     long_description_content_type="text/markdown",
