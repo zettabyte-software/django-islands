@@ -7,7 +7,7 @@ if django.VERSION < (3, 2):
 
 __all__ = ["default_app_config", "version"]
 
-version = (0, 0, 2)
+version = (0, 0, 3)
 
 __version__ = ".".join(map(str, version))
 __author__ = "Davi Silva Rafacho"
