@@ -66,9 +66,16 @@ class TenantQuerySet(QuerySet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Sometimes django creates empty QuerySets wihtout models
-        if self.model:
+
+        has_tenant_filter = getattr(self, "_has_tenant_filter", False)
+        if self.model and not has_tenant_filter:
+            # Injecting tenant_id filters in the QuerySet.
             kwargs = get_tenant_filters(self.model)
             self.query.add_q(Q(**kwargs))
+
+            # Django querysets are constantly cloned as their methods are used.
+            # This attr is used to avoid adding the tenant filter multiple times.
+            self._has_tenant_filter = True
 
 
 class TenantManagerMixin:
