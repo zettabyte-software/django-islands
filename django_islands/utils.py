@@ -4,11 +4,15 @@ from django.apps import apps
 
 from .settings import app_settings
 
-if app_settings.USE_ASGIREF:
-    # asgiref must be installed, its included with Django >= 3.0
-    from asgiref.local import Local as local
-else:
+# asgiref must be installed, its included with Django >= 3.0
+try:
+    if app_settings.USE_ASGIREF:
+        from asgiref.local import Local as local
+    else:
+        raise ImportError("Forcing fallback to threading.local")
+except ImportError:
     from threading import local
+
 
 
 _thread_locals = _context = local()

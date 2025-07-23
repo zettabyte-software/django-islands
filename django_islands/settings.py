@@ -8,7 +8,7 @@ USER_SETTINGS = getattr(settings, SETTINGS_NAMESPACE, None)
 
 DEFAULTS = {
     "ALLOW_NULL_TENANT": False,
-    "ALLOW_CHANGE_TENANT": False,
+    "ALLOW_TENANT_UPDATE": False,
     "USE_ASGIREF": False,
 }
 
@@ -24,7 +24,7 @@ def perform_import(val, setting_name):
     if isinstance(val, str):
         return import_from_string(val, setting_name)
 
-    if isinstance(val, list | tuple):
+    if isinstance(val, (list, tuple)):
         return [import_from_string(item, setting_name) for item in val]
 
     return val
